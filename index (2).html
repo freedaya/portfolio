@@ -1,0 +1,2563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fayzan Rizky Hidayat — Data Analyst & Data Scientist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --bg: #0a0b0f;
+      --bg2: #0f1117;
+      --bg3: #141720;
+      --card: #161b27;
+      --border: #ffffff10;
+      --border2: #ffffff1a;
+      --gold: #e2b96f;
+      --gold2: #f0cc8a;
+      --text: #e8eaf0;
+      --muted: #7a8099;
+      --muted2: #b0b8cc;
+      --accent: #4f9ef8;
+      --green: #2dd4bf;
+      --red: #f87171;
+      --r: 12px;
+      --r2: 8px;
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border2);
+      border-radius: 3px
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: -1;
+      opacity: .4
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0 2.5rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 11, 15, .92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: transform .3s
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem
+    }
+
+    .header-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(226, 185, 111, .4);
+      flex-shrink: 0
+    }
+
+    .logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--gold);
+      text-decoration: none
+    }
+
+    .logo span {
+      color: var(--muted2);
+      font-weight: 500
+    }
+
+    .header-center {
+      display: flex;
+      gap: 2.25rem;
+      align-items: center
+    }
+
+    .header-center a {
+      font-size: .88rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .2s;
+      position: relative;
+      padding-bottom: 2px
+    }
+
+    .header-center a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width .2s
+    }
+
+    .header-center a:hover {
+      color: var(--text)
+    }
+
+    .header-center a:hover::after {
+      width: 100%
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: .75rem
+    }
+
+    .header-social a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .8rem;
+      font-weight: 500;
+      transition: color .2s;
+      padding: .3rem .5rem;
+      border-radius: 4px
+    }
+
+    .header-social a:hover {
+      color: var(--gold)
+    }
+
+    .nav-cta {
+      background: var(--gold) !important;
+      color: #0a0b0f !important;
+      padding: .45rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: .82rem !important;
+      text-decoration: none
+    }
+
+    .nav-cta:hover {
+      background: var(--gold2) !important
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px
+    }
+
+    .hamburger span {
+      width: 22px;
+      height: 2px;
+      background: var(--muted);
+      border-radius: 2px;
+      display: block;
+      transition: .3s
+    }
+
+    .mob-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 11, 15, .97);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem
+    }
+
+    .mob-nav.open {
+      display: flex
+    }
+
+    .mob-nav a {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none
+    }
+
+    .mob-nav a:hover {
+      color: var(--gold)
+    }
+
+    .mob-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-size: 1.5rem;
+      color: var(--muted);
+      cursor: pointer;
+      background: none;
+      border: none
+    }
+
+    /* LATEST PROJECTS strip in header */
+    .header-projects {
+      display: flex;
+      gap: .75rem;
+      align-items: center
+    }
+
+    .hp-label {
+      font-size: .7rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-right: .25rem;
+      white-space: nowrap
+    }
+
+    .hp-thumb {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1.5px solid var(--border2);
+      cursor: pointer;
+      transition: all .2s;
+      display: block
+    }
+
+    .hp-thumb:hover {
+      border-color: var(--gold);
+      transform: scale(1.1)
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 2.5rem 4rem;
+      position: relative;
+      overflow: hidden
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: .35
+    }
+
+    .hero-glow {
+      position: absolute;
+      right: -5%;
+      top: 5%;
+      width: 45%;
+      height: 80%;
+      background: radial-gradient(ellipse, rgba(226, 185, 111, .07) 0%, transparent 65%);
+      pointer-events: none
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      position: relative;
+      z-index: 1
+    }
+
+    .hero-photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1.75rem;
+      border: 3px solid rgba(226, 185, 111, .3);
+      display: block
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(226, 185, 111, .08);
+      border: 1px solid rgba(226, 185, 111, .2);
+      color: var(--gold);
+      font-size: .78rem;
+      padding: .3rem .85rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+      letter-spacing: .5px;
+      font-weight: 600
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .2
+      }
+    }
+
+    h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.08;
+      margin-bottom: 1.25rem;
+      letter-spacing: -1.5px
+    }
+
+    h1 .name-line {
+      display: block;
+      color: var(--text)
+    }
+
+    h1 .accent-line {
+      display: block;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--muted2);
+      max-width: 480px;
+      margin-bottom: 2rem;
+      line-height: 1.75;
+      font-weight: 400
+    }
+
+    .hero-links {
+      display: flex;
+      gap: .75rem;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .75rem 1.4rem;
+      border-radius: var(--r2);
+      font-size: .9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s;
+      cursor: pointer;
+      border: none;
+      font-family: 'Inter', sans-serif
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #0a0b0f
+    }
+
+    .btn-primary:hover {
+      background: var(--gold2);
+      transform: translateY(-1px)
+    }
+
+    .btn-li {
+      background: #0a66c2;
+      color: #fff
+    }
+
+    .btn-li:hover {
+      background: #0958a5
+    }
+
+    .btn-gh {
+      background: #2a2a2a;
+      color: #fff
+    }
+
+    .btn-gh:hover {
+      background: #1a1a1a
+    }
+
+    .btn-em {
+      background: #c0392b;
+      color: #fff
+    }
+
+    .btn-em:hover {
+      background: #a93226
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--text)
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-1px)
+    }
+
+    .btn-gold-outline {
+      background: transparent;
+      border: 1px solid rgba(226, 185, 111, .4);
+      color: var(--gold)
+    }
+
+    .btn-gold-outline:hover {
+      background: rgba(226, 185, 111, .08);
+      transform: translateY(-1px)
+    }
+
+    /* SKILLS CARD */
+    .skills-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 2rem
+    }
+
+    .skills-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .85rem;
+      font-weight: 700;
+      margin-top: 1.25rem
+    }
+
+    .skills-title:first-child {
+      margin-top: 0
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: .5rem
+    }
+
+    .skill-tag {
+      font-size: .82rem;
+      padding: .35rem .8rem;
+      border-radius: 100px;
+      border: 1px solid var(--border2);
+      color: var(--muted2);
+      font-weight: 500;
+      transition: all .2s
+    }
+
+    .skill-tag:hover {
+      border-color: var(--gold);
+      color: var(--gold)
+    }
+
+    .skill-tag.active {
+      background: rgba(226, 185, 111, .1);
+      border-color: rgba(226, 185, 111, .3);
+      color: var(--gold)
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 2.5rem
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto
+    }
+
+    .section-label {
+      font-size: .75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .75rem;
+      font-weight: 700
+    }
+
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+      letter-spacing: -.5px
+    }
+
+    .section-desc {
+      color: var(--muted2);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      font-size: 1rem;
+      line-height: 1.7
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border2), transparent)
+    }
+
+    /* ABOUT */
+    #about {
+      background: var(--bg2)
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start
+    }
+
+    .about-text p {
+      color: var(--muted2);
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.8
+    }
+
+    .edu-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.5rem;
+      border-left: 4px solid var(--gold);
+      margin-bottom: 1rem
+    }
+
+    .edu-school {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: .25rem
+    }
+
+    .edu-degree {
+      font-size: .95rem;
+      color: var(--muted2)
+    }
+
+    .edu-year {
+      font-size: .85rem;
+      color: var(--muted);
+      margin-top: .4rem
+    }
+
+    .soft-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .75rem
+    }
+
+    /* STATS ROW */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem
+    }
+
+    .stat-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.5rem;
+      text-align: center;
+      transition: border-color .2s
+    }
+
+    .stat-box:hover {
+      border-color: rgba(226, 185, 111, .3)
+    }
+
+    .stat-val {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gold)
+    }
+
+    .stat-lbl {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-top: .25rem;
+      letter-spacing: .3px
+    }
+
+    /* TABS */
+    #projects {
+      background: var(--bg)
+    }
+
+    .tab-bar {
+      display: flex;
+      gap: .5rem;
+      margin-bottom: 3rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: .5rem;
+      width: fit-content
+    }
+
+    .tab-btn {
+      padding: .7rem 1.75rem;
+      border-radius: var(--r2);
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      transition: all .2s
+    }
+
+    .tab-btn.active {
+      background: var(--gold);
+      color: #0a0b0f
+    }
+
+    .tab-panel {
+      display: none
+    }
+
+    .tab-panel.active {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem
+    }
+
+    /* PROJECT CARD */
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      transition: border-color .2s
+    }
+
+    .project-card:hover {
+      border-color: rgba(226, 185, 111, .25)
+    }
+
+    .project-header {
+      display: grid;
+      grid-template-columns: 320px 1fr
+    }
+
+    .project-thumb {
+      width: 320px;
+      height: 100%;
+      min-height: 220px;
+      object-fit: cover;
+      object-position: center top;
+      border-right: 1px solid var(--border);
+      display: block;
+      flex-shrink: 0
+    }
+
+    .project-info {
+      padding: 2rem
+    }
+
+    .project-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: .75rem;
+      letter-spacing: -.2px
+    }
+
+    .project-desc {
+      font-size: .95rem;
+      color: var(--muted2);
+      margin-bottom: 1.25rem;
+      line-height: 1.7
+    }
+
+    .tools-badge {
+      font-size: .82rem;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      display: block;
+      letter-spacing: .2px
+    }
+
+    .project-actions {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      align-items: center
+    }
+
+    .btn-sm {
+      padding: .5rem 1.1rem;
+      font-size: .82rem
+    }
+
+    /* DETAIL PANEL */
+    .project-detail {
+      display: none;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem;
+      background: var(--bg2)
+    }
+
+    .project-detail.open {
+      display: block
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem
+    }
+
+    .detail-section h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--gold)
+    }
+
+    .detail-section p {
+      font-size: .93rem;
+      color: var(--muted2);
+      line-height: 1.75;
+      margin-bottom: .75rem
+    }
+
+    .detail-section ul {
+      padding-left: 1.4rem;
+      margin-top: .5rem
+    }
+
+    .detail-section li {
+      font-size: .93rem;
+      color: var(--muted2);
+      line-height: 1.7;
+      margin-bottom: .5rem
+    }
+
+    .detail-section li b {
+      color: var(--text)
+    }
+
+    .detail-img {
+      width: 100%;
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+      display: block;
+      object-fit: cover
+    }
+
+    .chart-wrap {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.5rem;
+      margin-top: .75rem
+    }
+
+    .chart-wrap canvas {
+      max-height: 240px
+    }
+
+    /* FINDING PILLS */
+    .find-list {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+      margin-top: .75rem
+    }
+
+    .find-item {
+      display: flex;
+      gap: .7rem;
+      align-items: flex-start;
+      font-size: .88rem;
+      line-height: 1.55
+    }
+
+    .find-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: .32rem;
+      flex-shrink: 0
+    }
+
+    .find-dot.top {
+      background: var(--gold)
+    }
+
+    .find-dot.ok {
+      background: var(--green)
+    }
+
+    .find-dot.no {
+      background: var(--red)
+    }
+
+    .find-dot.bl {
+      background: var(--accent)
+    }
+
+    .find-key {
+      font-weight: 600;
+      color: var(--text);
+      margin-right: .25rem
+    }
+
+    .find-val {
+      color: var(--muted2)
+    }
+
+    /* CORR BARS */
+    .corr-list {
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+      margin-top: .5rem
+    }
+
+    .corr-item {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-size: .82rem
+    }
+
+    .corr-label {
+      width: 155px;
+      color: var(--muted2);
+      flex-shrink: 0;
+      font-size: .8rem
+    }
+
+    .corr-bw {
+      flex: 1;
+      background: rgba(255, 255, 255, .05);
+      border-radius: 100px;
+      height: 6px
+    }
+
+    .corr-b {
+      height: 6px;
+      border-radius: 100px;
+      transition: width .7s ease
+    }
+
+    .corr-val {
+      width: 38px;
+      text-align: right;
+      color: var(--muted);
+      font-size: .78rem;
+      flex-shrink: 0
+    }
+
+    /* MODEL TABLE */
+    .model-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .88rem;
+      margin-top: .75rem
+    }
+
+    .model-table th {
+      padding: .65rem .85rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border2);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: .78rem;
+      letter-spacing: .5px
+    }
+
+    .model-table td {
+      padding: .65rem .85rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted2)
+    }
+
+    .model-table tr:last-child td {
+      border-bottom: none
+    }
+
+    .model-table .best {
+      color: var(--green);
+      font-weight: 700
+    }
+
+    .model-table tr:hover td {
+      background: rgba(255, 255, 255, .02)
+    }
+
+    /* PILLARS */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .85rem;
+      margin-top: .85rem
+    }
+
+    .pillar {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.1rem
+    }
+
+    .pillar-ico {
+      font-size: 1.3rem;
+      margin-bottom: .5rem
+    }
+
+    .pillar-t {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: .85rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: .35rem
+    }
+
+    .pillar-p {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.55
+    }
+
+    /* METRICS ROW */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .75rem;
+      margin-top: .75rem
+    }
+
+    .metric-box {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.1rem;
+      text-align: center
+    }
+
+    .metric-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800
+    }
+
+    .metric-num.g {
+      color: var(--gold)
+    }
+
+    .metric-num.gr {
+      color: var(--green)
+    }
+
+    .metric-num.b {
+      color: var(--accent)
+    }
+
+    .metric-lbl {
+      font-size: .73rem;
+      color: var(--muted);
+      margin-top: .2rem
+    }
+
+    /* PPT VIEWER */
+    .ppt-panel {
+      display: none;
+      border-top: 1px solid var(--border);
+      background: var(--bg3)
+    }
+
+    .ppt-panel.open {
+      display: block
+    }
+
+    .ppt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .ppt-title {
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--muted2)
+    }
+
+    .ppt-close {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      padding: .3rem .8rem;
+      border-radius: var(--r2);
+      cursor: pointer;
+      font-size: .8rem;
+      font-family: 'Inter', sans-serif;
+      transition: all .2s
+    }
+
+    .ppt-close:hover {
+      border-color: var(--red);
+      color: var(--red)
+    }
+
+    .ppt-viewer {
+      width: 100%;
+      height: 600px;
+      border: none;
+      display: block
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--bg2)
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center
+    }
+
+    .tagline-big {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 1rem
+    }
+
+    .tagline-big span {
+      color: var(--gold)
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      margin-top: 1.5rem
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1rem 1.25rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all .2s
+    }
+
+    .contact-link:hover {
+      border-color: var(--gold);
+      transform: translateX(4px)
+    }
+
+    .cl-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: .9rem;
+      flex-shrink: 0
+    }
+
+    .cl-icon.li {
+      background: #0a66c2
+    }
+
+    .cl-icon.gh {
+      background: #2a2a2a
+    }
+
+    .cl-icon.em {
+      background: #c0392b
+    }
+
+    .cl-icon.ig {
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)
+    }
+
+    .cl-icon.ph {
+      background: #25d366;
+      font-size: .85rem
+    }
+
+    .cl-name {
+      font-size: .9rem;
+      font-weight: 600
+    }
+
+    .cl-sub {
+      font-size: .78rem;
+      color: var(--muted)
+    }
+
+    .avail-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.75rem
+    }
+
+    /* FOOTER — Konform style */
+    footer {
+      background: #0d0e13;
+      border-top: 1px solid var(--border)
+    }
+
+    .footer-top {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start
+    }
+
+    .footer-tagline {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text);
+      letter-spacing: -1px;
+      margin-bottom: 2rem
+    }
+
+    .footer-tagline span {
+      color: var(--gold)
+    }
+
+    .footer-contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+      margin-top: .5rem
+    }
+
+    .footer-contact-info a {
+      font-size: 1rem;
+      color: var(--muted2);
+      text-decoration: none;
+      transition: color .2s;
+      display: inline-block
+    }
+
+    .footer-contact-info a:hover {
+      color: var(--gold)
+    }
+
+    .footer-contact-info .fc-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--border2);
+      margin: 0.5rem 0
+    }
+
+    .footer-meta {
+      text-align: right;
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.9
+    }
+
+    .footer-meta strong {
+      color: var(--muted2);
+      display: block;
+      font-size: .88rem;
+      font-weight: 600;
+      margin-bottom: .25rem
+    }
+
+    .footer-cols {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      border-top: 1px solid var(--border)
+    }
+
+    .footer-col {
+      padding-top: 2rem
+    }
+
+    .footer-col-title {
+      font-size: .72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      padding-bottom: .75rem;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .footer-col-link {
+      display: block;
+      font-size: .88rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: .5rem;
+      transition: color .2s;
+      line-height: 1.5
+    }
+
+    .footer-col-link:hover {
+      color: var(--text)
+    }
+
+    .footer-col-sub {
+      font-size: .8rem;
+      color: var(--muted);
+      margin-top: .25rem;
+      line-height: 1.5
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: none
+    }
+
+    .footer-bottom-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .75rem
+    }
+
+    .footer-copy {
+      font-size: .8rem;
+      color: var(--muted)
+    }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .footer-socials span {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-right: .5rem
+    }
+
+    .footer-socials a {
+      font-size: .78rem;
+      color: var(--muted2);
+      text-decoration: none;
+      padding: .3rem .6rem;
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      transition: all .2s
+    }
+
+    .footer-socials a:hover {
+      color: var(--gold);
+      border-color: rgba(226, 185, 111, .3)
+    }
+
+    @media(max-width:960px) {
+      .footer-top {
+        grid-template-columns: 1fr
+      }
+
+      .footer-meta {
+        text-align: left
+      }
+
+      .footer-cols {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .footer-bottom {
+        padding: 1.25rem 1.5rem
+      }
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:960px) {
+
+      .header-center,
+      .header-right {
+        display: none
+      }
+
+      .hamburger {
+        display: flex
+      }
+
+      .hero-inner,
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero-right {
+        display: none
+      }
+
+      .project-header {
+        grid-template-columns: 1fr
+      }
+
+      .project-thumb {
+        width: 100%;
+        height: 220px;
+        border-right: none;
+        border-bottom: 1px solid var(--border)
+      }
+
+      .detail-grid {
+        grid-template-columns: 1fr
+      }
+
+      .pillar-grid {
+        grid-template-columns: 1fr
+      }
+
+      .metrics-row {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media(max-width:1100px) {
+      .header-projects {
+        display: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MOBILE NAV -->
+  <div class="mob-nav" id="mobNav">
+    <button class="mob-close" onclick="closeMob()">✕</button>
+    <a href="#about" onclick="closeMob()">About</a>
+    <a href="#projects" onclick="closeMob()">Projects</a>
+    <a href="#contact" onclick="closeMob()">Contact</a>
+    <a href="mailto:fayzan.rh@gmail.com" class="btn btn-primary" onclick="closeMob()">Hire Me</a>
+  </div>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="logo">FRH<span> · Data Portfolio</span></div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <a href="mailto:fayzan.rh@gmail.com" class="nav-cta">Hire Me</a>
+    </nav>
+    <div class="hamburger" onclick="document.getElementById('mobNav').classList.add('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <img src="assets/img_001.png" alt="Fayzan Rizky Hidayat" class="hero-photo">
+        <div class="hero-badge">Available for opportunities</div>
+        <h1>
+          <span class="name-line">Fayzan Rizky</span>
+          <span class="accent-line">Hidayat</span>
+        </h1>
+        <div class="hero-links">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="https://linkedin.com/in/fayzan-rizky-hidayat/" target="_blank" class="btn btn-li">LinkedIn</a>
+          <a href="https://github.com/freedaya" target="_blank" class="btn btn-gh">GitHub</a>
+          <a href="mailto:fayzan.rh@gmail.com" class="btn btn-em">Email</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="skills-card">
+          <div class="skills-title">🛠 Programming & Databases</div>
+          <div class="skill-tags">
+            <span class="skill-tag active">Python</span>
+            <span class="skill-tag">Pandas</span>
+            <span class="skill-tag">PostgreSQL</span>
+          </div>
+          <div class="skills-title">📈 Visualization & BI</div>
+          <div class="skill-tags">
+            <span class="skill-tag active">Power BI (DAX)</span>
+            <span class="skill-tag">Tableau</span>
+            <span class="skill-tag">Streamlit</span>
+            <span class="skill-tag">Plotly & Seaborn</span>
+          </div>
+          <div class="skills-title">💡 Machine Learning</div>
+          <div class="skill-tags">
+            <span class="skill-tag active">Scikit-Learn</span>
+            <span class="skill-tag">Clustering</span>
+            <span class="skill-tag">Regression</span>
+            <span class="skill-tag">Classification</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-label">Background</div>
+      <h2 class="section-title">About & Education</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>Seorang lulusan fisika yang bertransisi ke ranah Data Analyst & Data Scientist. Memiliki ketertarikan kuat
+            pada <em>data-driven decision making</em>, ditunjang dengan pengalaman mendalam dalam analisis statistik,
+            machine learning, dan kompilasi dashboard interaktif menggunakan Python dan Power BI.</p>
+          <p>Dengan latar belakang fisika, saya membawa pendekatan ilmiah ke setiap dataset — membentuk hipotesis,
+            mengujinya secara ketat, dan mengomunikasikan temuan secara jelas kepada stakeholder bisnis. Saat ini
+            memperdalam keahlian teknis melalui bootcamp Data Analyst & Data Science di dibimbing.id.</p>
+          <div class="skills-title" style="margin-top:1.5rem">🌟 Soft Skills</div>
+          <div class="soft-list">
+            <span class="skill-tag">Communication Skills</span>
+            <span class="skill-tag">Problem Solving</span>
+            <span class="skill-tag">Teamwork</span>
+            <span class="skill-tag">Digital Literacy</span>
+          </div>
+        </div>
+        <div>
+          <div class="edu-item">
+            <div class="edu-school">dibimbing.id</div>
+            <div class="edu-degree">Data Analyst / Data Science Bootcamp</div>
+            <div class="edu-year">September 2025 – 2026</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-school">Universitas Padjadjaran</div>
+            <div class="edu-degree">Bachelor of Physics Sciences</div>
+            <div class="edu-year">Agustus 2021 – Agustus 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-desc">End-to-end analytical projects mencakup eksplorasi data, statistical testing, machine
+        learning, dan business strategy.</p>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('da')">📊 Data Analyst</button>
+        <button class="tab-btn" onclick="switchTab('ds')">📈 Data Science</button>
+      </div>
+
+      <!-- ===== DATA ANALYST TAB ===== -->
+      <div class="tab-panel active" id="tab-da">
+
+        <!-- SURGE PRICING -->
+        <div class="project-card">
+          <div class="project-header">
+            <img src="assets/surgepricing.jpg" class="project-thumb" alt="Surge Pricing Analysis">
+            <div class="project-info">
+              <div class="project-title">🚕 Surge Pricing Analysis – Sigma Cabs</div>
+              <p class="project-desc">Analisis faktor-faktor yang mempengaruhi dynamic surge pricing pada platform
+                agregator taksi Sigma Cabs di India, menggunakan dataset 131.662 perjalanan dengan 8 pertanyaan analitik
+                mendalam (Univariate, Bivariate, Multivariate) dan uji statistik Chi-Squared.</p>
+              <span class="tools-badge">Tools: Python · Pandas · Seaborn · Plotly · SciPy · Jupyter Notebook</span>
+              <div class="project-actions">
+                <button class="btn btn-outline btn-sm" onclick="toggleDetail('surge')">🔍 View Details</button>
+                <button class="btn btn-gold-outline btn-sm"
+                  onclick="togglePPT('surge-ppt','docs/surgepricingppt.pdf','Surge Pricing Analysis – Sigma Cabs')">📑
+                  View PPT</button>
+                <a href="https://surge-pricing-analysis.streamlit.app/" target="_blank"
+                  class="btn btn-primary btn-sm">🚀 Live App</a>
+              </div>
+            </div>
+          </div>
+          <!-- PPT VIEWER -->
+          <div class="ppt-panel" id="surge-ppt">
+            <div class="ppt-header">
+              <span class="ppt-title">📑 Surge Pricing Analysis – Sigma Cabs.pdf</span>
+              <button class="ppt-close" onclick="togglePPT('surge-ppt')">✕ Close</button>
+            </div>
+            <iframe class="ppt-viewer" id="surge-ppt-frame" src="" loading="lazy"></iframe>
+          </div>
+          <!-- DETAIL -->
+          <div class="project-detail" id="detail-surge">
+            <div class="detail-grid">
+              <div>
+                <div class="detail-section">
+                  <h4>📊 Korelasi Fitur vs Surge Pricing</h4>
+                  <div class="corr-list" id="corrSurge"></div>
+                </div>
+                <div class="detail-section" style="margin-top:1.75rem">
+                  <h4>📊 Type of Cab vs Surge Pricing (%)</h4>
+                  <div class="chart-wrap"><canvas id="surgeCabChart"></canvas></div>
+                </div>
+              </div>
+              <div>
+                <div class="detail-section">
+                  <h4>📌 Project Overview</h4>
+                  <p>Sigma Cabs adalah platform agregator taksi di India yang menghubungkan pengguna dengan berbagai
+                    penyedia transportasi. Setelah hampir satu tahun beroperasi, perusahaan masih kesulitan memetakan
+                    faktor dominan yang memicu kenaikan surge pricing (skala 1–3) yang ditentukan secara dinamis.</p>
+                  <p><strong style="color:var(--text)">Tujuan:</strong> Menghasilkan insight berbasis data untuk
+                    mengidentifikasi faktor utama surge pricing, mendukung optimasi strategi pricing, supply-demand, dan
+                    pengalaman pelanggan.</p>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>📊 Key Findings – 5 Faktor Signifikan</h4>
+                  <div class="find-list">
+                    <div class="find-item">
+                      <div class="find-dot top"></div>
+                      <div><span class="find-key">Type_of_Cab (r=0.50)</span><span class="find-val">Penentu terkuat.
+                          Tipe D/E → 72–81% Surge Type 3. Ada pola linier jelas: semakin premium kelas taksi, semakin
+                          tinggi surge.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Cancellation_Last_1Month (r=0.19)</span><span class="find-val">≥3
+                          pembatalan dalam sebulan → dominasi Surge Type 3.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Customer_Rating (r=−0.16)</span><span class="find-val">Korelasi
+                          negatif — rating lebih tinggi berkaitan dengan surge lebih rendah.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Trip_Distance (r=0.14)</span><span class="find-val">Type 3 median 45
+                          km vs 36 km untuk Type 1 & 2.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Destination_Type</span><span class="find-val">p-value &lt; 0.05
+                          (Chi-Squared) meskipun korelasi lemah — tetap signifikan.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot no"></div>
+                      <div><span class="find-key">Gender, Life_Style_Index, Customer_Since_Months</span><span
+                          class="find-val">Tidak signifikan — distribusi identik di semua surge type.</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>💡 Strategic Recommendations</h4>
+                  <div class="pillar-grid">
+                    <div class="pillar">
+                      <div class="pillar-ico">💰</div>
+                      <div class="pillar-t">Pricing Strategy</div>
+                      <div class="pillar-p">Gunakan Type_of_Cab sebagai segmentasi utama dalam algoritma surge pricing.
+                        Komunikasi transparan per kelas kendaraan.</div>
+                    </div>
+                    <div class="pillar">
+                      <div class="pillar-ico">⚙️</div>
+                      <div class="pillar-t">Operational</div>
+                      <div class="pillar-p">Early warning system untuk akun dengan riwayat pembatalan tinggi. Pre-posisi
+                        driver di area berisiko.</div>
+                    </div>
+                    <div class="pillar">
+                      <div class="pillar-ico">⭐</div>
+                      <div class="pillar-t">Customer XP</div>
+                      <div class="pillar-p">Berikan surge discount untuk pelanggan berrating tinggi. Program loyalty
+                        berbasis kualitas layanan.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- A/B TESTING -->
+        <div class="project-card">
+          <div class="project-header">
+            <img src="assets/abtesting.jpg" class="project-thumb" alt="A/B Testing">
+            <div class="project-info">
+              <div class="project-title">📈 A/B Testing – Landing Page Conversion Rate</div>
+              <p class="project-desc">Analisis A/B Testing untuk mengevaluasi performa landing page baru dibandingkan
+                versi lama dalam meningkatkan conversion rate, menggunakan Two-Proportion Z-Test untuk pengambilan
+                keputusan berbasis statistik.</p>
+              <span class="tools-badge">Tools: Python · Statistical Analysis · Power BI</span>
+              <div class="project-actions">
+                <button class="btn btn-outline btn-sm" onclick="toggleDetail('abtest')">🔍 View Details</button>
+                <button class="btn btn-gold-outline btn-sm"
+                  onclick="togglePPT('abtest-ppt','docs/abtestingppt.pdf','A/B Testing – Landing Page')">📑 View
+                  PPT</button>
+              </div>
+            </div>
+          </div>
+          <div class="ppt-panel" id="abtest-ppt">
+            <div class="ppt-header">
+              <span class="ppt-title">📑 A/B Testing – Landing Page.pdf</span>
+              <button class="ppt-close" onclick="togglePPT('abtest-ppt')">✕ Close</button>
+            </div>
+            <iframe class="ppt-viewer" id="abtest-ppt-frame" src="" loading="lazy"></iframe>
+          </div>
+          <div class="project-detail" id="detail-abtest">
+            <div class="detail-grid">
+              <div>
+                <img src="assets/abtestingdb.jpg" class="detail-img" alt="A/B Testing Dashboard">
+                <div class="detail-section" style="margin-top:1.5rem">
+                  <h4>📊 Statistical Test Result</h4>
+                  <div class="find-list">
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Control group</span><span class="find-val">Memiliki conversion rate
+                          sedikit lebih tinggi dibanding treatment group.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot no"></div>
+                      <div><span class="find-key">p-value = 0.1897 (&gt; 0.05)</span><span class="find-val">Gagal tolak
+                          H0 — tidak ada perbedaan signifikan secara statistik.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot bl"></div>
+                      <div><span class="find-key">Two-Proportion Z-Test</span><span class="find-val">Metode uji
+                          statistik yang digunakan untuk membandingkan dua proporsi konversi.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="detail-section">
+                  <h4>📌 Project Overview</h4>
+                  <p>Perusahaan ingin meningkatkan conversion rate pada landing page melalui A/B Testing antara versi
+                    lama (control) dan versi baru (treatment). Eksperimen dirancang untuk memastikan perubahan desain
+                    berdampak nyata, bukan hanya variasi acak.</p>
+                  <p><strong style="color:var(--text)">Tujuan:</strong> Mengetahui secara statistik apakah landing page
+                    baru memberikan performa konversi yang lebih baik dibandingkan versi lama.</p>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>📊 Method & Result</h4>
+                  <p>Analisis dilakukan dengan menghitung conversion rate masing-masing grup dan menggunakan
+                    Two-Proportion Z-Test untuk menguji perbedaan secara statistik.</p>
+                  <p>Hasil menunjukkan perbedaan kecil antara control dan treatment, namun <strong
+                      style="color:var(--text)">tidak cukup signifikan</strong> untuk menyimpulkan bahwa desain baru
+                    lebih efektif (p-value 0.1897).</p>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>💡 Insight & Recommendation</h4>
+                  <ul>
+                    <li>Landing page baru belum terbukti lebih efektif — perbedaan kemungkinan disebabkan variasi acak.
+                    </li>
+                    <li>Lakukan iterasi desain: perbaiki elemen CTA, layout, dan copywriting.</li>
+                    <li>Tambah ukuran sampel atau durasi eksperimen untuk meningkatkan statistical power.</li>
+                    <li>Lakukan segmented A/B testing berdasarkan sumber traffic untuk insight lebih dalam.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CUSTOMER SATISFACTION -->
+        <div class="project-card">
+          <div class="project-header">
+            <img src="assets/customersatisfaction.jpg" class="project-thumb" alt="Customer Satisfaction">
+            <div class="project-info">
+              <div class="project-title">😊 Customer Satisfaction & Sentiment Analysis</div>
+              <p class="project-desc">Analisis kepuasan pelanggan dan sentiment dari review menggunakan model NLP
+                RoBERTa, dikombinasikan dengan metrik CSAT, CES, dan NPS untuk memahami faktor yang mempengaruhi
+                loyalitas pelanggan.</p>
+              <span class="tools-badge">Tools: Python · NLP (RoBERTa) · Power BI</span>
+              <div class="project-actions">
+                <button class="btn btn-outline btn-sm" onclick="toggleDetail('csat')">🔍 View Details</button>
+                <button class="btn btn-gold-outline btn-sm"
+                  onclick="togglePPT('csat-ppt','docs/customersatisfactionppt.pdf','Customer Satisfaction & Sentiment Analysis')">📑
+                  View PPT</button>
+              </div>
+            </div>
+          </div>
+          <div class="ppt-panel" id="csat-ppt">
+            <div class="ppt-header">
+              <span class="ppt-title">📑 Customer Satisfaction & Sentiment Analysis.pdf</span>
+              <button class="ppt-close" onclick="togglePPT('csat-ppt')">✕ Close</button>
+            </div>
+            <iframe class="ppt-viewer" id="csat-ppt-frame" src="" loading="lazy"></iframe>
+          </div>
+          <div class="project-detail" id="detail-csat">
+            <div class="detail-grid">
+              <div>
+                <img src="assets/customersatisfactiondb.jpg" class="detail-img" alt="Customer Satisfaction Dashboard">
+                <div class="detail-section" style="margin-top:1.5rem">
+                  <h4>📊 Key Metrics</h4>
+                  <div class="metrics-row">
+                    <div class="metric-box">
+                      <div class="metric-num g">11.94%</div>
+                      <div class="metric-lbl">NPS Score</div>
+                    </div>
+                    <div class="metric-box">
+                      <div class="metric-num gr">84.75%</div>
+                      <div class="metric-lbl">Positive Reviews</div>
+                    </div>
+                    <div class="metric-box">
+                      <div class="metric-num b">CSAT·CES·NPS</div>
+                      <div class="metric-lbl">Metrics Used</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="detail-section">
+                  <h4>📌 Project Overview</h4>
+                  <p>Analisis dilakukan untuk memahami tingkat kepuasan pelanggan dari survey sekaligus mengidentifikasi
+                    sentimen dari review teks pelanggan menggunakan model RoBERTa (state-of-the-art NLP).</p>
+                  <p><strong style="color:var(--text)">Tujuan:</strong> Mengidentifikasi faktor utama yang mempengaruhi
+                    kepuasan dan loyalitas pelanggan secara komprehensif.</p>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>📊 Method & Result</h4>
+                  <p>Analisis menggunakan tiga metrik kepuasan: <strong style="color:var(--text)">CSAT</strong>
+                    (kepuasan transaksi), <strong style="color:var(--text)">CES</strong> (kemudahan pengalaman), dan
+                    <strong style="color:var(--text)">NPS</strong> (probabilitas rekomendasi). Sentiment analysis
+                    dijalankan menggunakan model RoBERTa pretrained.
+                  </p>
+                  <div class="find-list" style="margin-top:.75rem">
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">84.75% review positif</span><span class="find-val">Mayoritas pelanggan
+                          sudah puas dengan layanan yang diterima.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot top"></div>
+                      <div><span class="find-key">NPS 11.94% (average)</span><span class="find-val">Masih ada ruang
+                          perbaikan untuk meningkatkan promotor aktif.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Korelasi positif</span><span class="find-val">Rating numerik dan hasil
+                          sentiment analysis berjalan searah dan konsisten.</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>💡 Insight & Recommendation</h4>
+                  <ul>
+                    <li>Tingkatkan kualitas customer service — faktor utama pembeda Promotor vs Detractor.</li>
+                    <li>Perbaiki fitur dan usability produk berdasarkan feedback non-positif.</li>
+                    <li>Tingkatkan aspek <em>value for money</em> untuk mendorong NPS ke kategori Good.</li>
+                    <li>Monitor sentiment secara berkala dengan pipeline NLP otomatis.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RFM SEGMENTATION -->
+        <div class="project-card">
+          <div class="project-header">
+            <img src="assets/customeranalysis.jpg" class="project-thumb" alt="RFM Analysis">
+            <div class="project-info">
+              <div class="project-title">🧩 Customer Segmentation – RFM Analysis</div>
+              <p class="project-desc">Analisis segmentasi pelanggan menggunakan metode RFM (Recency, Frequency,
+                Monetary) dengan Power BI DAX feature engineering untuk mengidentifikasi Champions, Loyal, Potential,
+                dan At-Risk customers.</p>
+              <span class="tools-badge">Tools: Power BI · DAX Feature Engineering</span>
+              <div class="project-actions">
+                <button class="btn btn-outline btn-sm" onclick="toggleDetail('rfm')">🔍 View Details</button>
+                <button class="btn btn-gold-outline btn-sm"
+                  onclick="togglePPT('rfm-ppt','docs/customeranalysisppt.pdf','Customer Segmentation – RFM Analysis')">📑
+                  View PPT</button>
+              </div>
+            </div>
+          </div>
+          <div class="ppt-panel" id="rfm-ppt">
+            <div class="ppt-header">
+              <span class="ppt-title">📑 Customer Segmentation – RFM Analysis.pdf</span>
+              <button class="ppt-close" onclick="togglePPT('rfm-ppt')">✕ Close</button>
+            </div>
+            <iframe class="ppt-viewer" id="rfm-ppt-frame" src="" loading="lazy"></iframe>
+          </div>
+          <div class="project-detail" id="detail-rfm">
+            <div class="detail-grid">
+              <div>
+                <img src="assets/customeranalysisdb.jpg" class="detail-img" alt="RFM Dashboard">
+                <div class="detail-section" style="margin-top:1.5rem">
+                  <h4>📊 RFM Segment Overview</h4>
+                  <div class="chart-wrap"><canvas id="rfmChart"></canvas></div>
+                </div>
+              </div>
+              <div>
+                <div class="detail-section">
+                  <h4>📌 Project Overview</h4>
+                  <p>Analisis untuk mengelompokkan pelanggan berdasarkan perilaku transaksi menggunakan metode RFM.
+                    Seluruh feature engineering (skor Recency, Frequency, Monetary) dibangun menggunakan DAX di Power BI
+                    tanpa kode Python.</p>
+                  <p><strong style="color:var(--text)">Tujuan:</strong> Mengidentifikasi segmen customer bernilai tinggi
+                    dan merumuskan strategi bisnis yang tepat sasaran per segmen.</p>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>📊 Method & Result</h4>
+                  <p>Skor RFM dikalkulasi: <strong style="color:var(--text)">Recency</strong> (waktu terakhir
+                    transaksi), <strong style="color:var(--text)">Frequency</strong> (jumlah transaksi), <strong
+                      style="color:var(--text)">Monetary</strong> (total profit). Kombinasi skor menghasilkan 4 segmen
+                    utama.</p>
+                  <div class="find-list" style="margin-top:.75rem">
+                    <div class="find-item">
+                      <div class="find-dot top"></div>
+                      <div><span class="find-key">Champions (RFM 555)</span><span class="find-val">Frekuensi hingga 37
+                          transaksi, total profit &gt;$3.000. Segmen bernilai bisnis tertinggi.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Loyal Customers</span><span class="find-val">Konsisten bertransaksi
+                          dengan recency baik, kontributor revenue stabil.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot bl"></div>
+                      <div><span class="find-key">Potential Loyalists</span><span class="find-val">Potensi naik ke
+                          Champions dengan strategi upselling yang tepat.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot no"></div>
+                      <div><span class="find-key">At Risk</span><span class="find-val">Frequency tinggi tapi recency
+                          rendah — perlu re-engagement segera.</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>💡 Insight & Recommendation</h4>
+                  <ul>
+                    <li>Fokus retensi dan loyalty reward eksklusif untuk segmen Champions dan Loyal.</li>
+                    <li>Re-engage At Risk customers dengan promo atau email campaign bertarget.</li>
+                    <li>Tingkatkan value dari Potential Loyalists melalui strategi upselling yang personal.</li>
+                    <li>Customer dengan monetary tinggi adalah target utama retensi, bukan hanya yang paling sering
+                      transaksi.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end tab-da -->
+
+      <!-- ===== DATA SCIENCE TAB ===== -->
+      <div class="tab-panel" id="tab-ds">
+
+        <!-- AIRBNB -->
+        <div class="project-card">
+          <div class="project-header">
+            <img src="assets/superhostclassification.jpg" class="project-thumb" alt="Airbnb Superhost">
+            <div class="project-info">
+              <div class="project-title">🏨 Airbnb Superhost Classification Analysis</div>
+              <p class="project-desc">ML project untuk mengklasifikasikan status Superhost pada listing Airbnb New York
+                City berdasarkan faktor performa host, kualitas layanan, dan karakteristik listing menggunakan Random
+                Forest & Logistic Regression dengan feature importance analysis.</p>
+              <span class="tools-badge">Tools: Python · Pandas · Scikit-Learn · Plotly · Streamlit</span>
+              <div class="project-actions">
+                <button class="btn btn-outline btn-sm" onclick="toggleDetail('airbnb')">🔍 View Details</button>
+                <button class="btn btn-gold-outline btn-sm"
+                  onclick="togglePPT('airbnb-ppt','docs/superhostclassificationppt.pdf','Airbnb Superhost Classification')">📑
+                  View PPT</button>
+                <a href="https://airbnb-superhost-classification.streamlit.app/" target="_blank"
+                  class="btn btn-primary btn-sm">🚀 Live App</a>
+              </div>
+            </div>
+          </div>
+          <div class="ppt-panel" id="airbnb-ppt">
+            <div class="ppt-header">
+              <span class="ppt-title">📑 Airbnb Superhost Classification.pdf</span>
+              <button class="ppt-close" onclick="togglePPT('airbnb-ppt')">✕ Close</button>
+            </div>
+            <iframe class="ppt-viewer" id="airbnb-ppt-frame" src="" loading="lazy"></iframe>
+          </div>
+          <div class="project-detail" id="detail-airbnb">
+            <div class="detail-grid">
+              <div>
+                <div class="detail-section">
+                  <h4>⚖️ Model Performance Comparison</h4>
+                  <table class="model-table">
+                    <thead>
+                      <tr>
+                        <th>Model</th>
+                        <th>Accuracy</th>
+                        <th>F1</th>
+                        <th>ROC-AUC</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Dummy Baseline</td>
+                        <td>0.820</td>
+                        <td>0.000</td>
+                        <td>0.500</td>
+                      </tr>
+                      <tr>
+                        <td>Logistic Regression</td>
+                        <td>0.790</td>
+                        <td>0.600</td>
+                        <td>0.892</td>
+                      </tr>
+                      <tr>
+                        <td>Random Forest</td>
+                        <td>0.860</td>
+                        <td>0.700</td>
+                        <td>0.942</td>
+                      </tr>
+                      <tr>
+                        <td>LR (Tuned)</td>
+                        <td>0.790</td>
+                        <td>0.600</td>
+                        <td>0.892</td>
+                      </tr>
+                      <tr>
+                        <td>RF (Tuned)</td>
+                        <td>0.880</td>
+                        <td class="best">0.710</td>
+                        <td class="best">0.949</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="detail-section" style="margin-top:1.75rem">
+                  <h4>📊 Feature Importance (LogReg, SHAP & Permutation)</h4>
+                  <div class="chart-wrap"><canvas id="airbnbChart"></canvas></div>
+                </div>
+              </div>
+              <div>
+                <div class="detail-section">
+                  <h4>📌 Project Overview</h4>
+                  <p>Project berfokus pada industri short-term rental, khususnya listing Airbnb di New York City. Status
+                    Superhost diberikan kepada host yang secara konsisten memberikan layanan berkualitas tinggi dan
+                    menjaga kepuasan pelanggan.</p>
+                  <p><strong style="color:var(--text)">Tujuan:</strong> Membangun model ML untuk mengklasifikasikan
+                    potensi Superhost berdasarkan karakteristik listing, perilaku host, dan faktor lokasi.
+                    Mengidentifikasi pola yang berkontribusi terhadap performa hosting yang tinggi.</p>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>📊 Method & Key Findings</h4>
+                  <p>EDA → Feature Engineering → Logistic Regression & Random Forest → Hyperparameter Tuning → Evaluasi
+                    ROC-AUC & F1 Score.</p>
+                  <div class="find-list" style="margin-top:.75rem">
+                    <div class="find-item">
+                      <div class="find-dot top"></div>
+                      <div><span class="find-key">RF (Tuned) — ROC-AUC: 0.949</span><span class="find-val">Model terbaik
+                          dengan kemampuan prediksi tinggi.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Host response rate</span><span class="find-val">Faktor behavioral
+                          paling dominan — konsisten di semua metode importance.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Review scores rating</span><span class="find-val">Indikator utama
+                          kepuasan pelanggan dan kepercayaan platform.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Amenities count & number of reviews</span><span
+                          class="find-val">Meningkatkan daya tarik dan kredibilitas listing secara signifikan.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>💡 Insight & Recommendation</h4>
+                  <ul>
+                    <li>Faktor <em>behavioral</em> jauh lebih berpengaruh dari faktor struktural atau lokasi.</li>
+                    <li>Tingkatkan kecepatan dan konsistensi respon terhadap calon tamu.</li>
+                    <li>Fokus pada peningkatan kualitas layanan untuk menjaga review score tetap tinggi.</li>
+                    <li>Tambahkan amenities dan dorong tamu memberikan review untuk meningkatkan trust.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- K-MEANS CLUSTERING -->
+        <div class="project-card">
+          <div class="project-header">
+            <img src="assets/clustering.jpg" class="project-thumb" alt="K-Means Clustering">
+            <div class="project-info">
+              <div class="project-title">✈️ Flight Customer Segmentation – K-Means Clustering</div>
+              <p class="project-desc">ML project untuk segmentasi pelanggan maskapai penerbangan berdasarkan pola
+                perjalanan, loyalitas, dan perilaku transaksi menggunakan K-Means Clustering. Dimensi direduksi dengan
+                PCA untuk visualisasi dan pemilihan cluster optimal dengan Elbow Method & Silhouette Score.</p>
+              <span class="tools-badge">Tools: Python · Scikit-Learn · Plotly · Jupyter Notebook</span>
+              <div class="project-actions">
+                <button class="btn btn-outline btn-sm" onclick="toggleDetail('kmeans')">🔍 View Details</button>
+                <button class="btn btn-gold-outline btn-sm"
+                  onclick="togglePPT('kmeans-ppt','docs/clusteringppt.pdf','Flight Customer Segmentation – K-Means')">📑
+                  View PPT</button>
+              </div>
+            </div>
+          </div>
+          <div class="ppt-panel" id="kmeans-ppt">
+            <div class="ppt-header">
+              <span class="ppt-title">📑 Flight Customer Segmentation – K-Means.pdf</span>
+              <button class="ppt-close" onclick="togglePPT('kmeans-ppt')">✕ Close</button>
+            </div>
+            <iframe class="ppt-viewer" id="kmeans-ppt-frame" src="" loading="lazy"></iframe>
+          </div>
+          <div class="project-detail" id="detail-kmeans">
+            <div class="detail-grid">
+              <div>
+                <div class="detail-section">
+                  <h4>📊 4 Customer Segments (Radar Profile)</h4>
+                  <div class="chart-wrap"><canvas id="clusterChart"></canvas></div>
+                </div>
+              </div>
+              <div>
+                <div class="detail-section">
+                  <h4>📌 Project Overview</h4>
+                  <p>Segmentasi pelanggan maskapai menggunakan pendekatan unsupervised learning. PC1 merepresentasikan
+                    Customer Value & Activity, PC2 merepresentasikan Recency & Engagement. Elbow Method dan Silhouette
+                    Score menentukan 4 cluster optimal.</p>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>📊 Cluster Results</h4>
+                  <div class="find-list">
+                    <div class="find-item">
+                      <div class="find-dot top"></div>
+                      <div><span class="find-key">Cluster 0 — Core Loyal</span><span class="find-val">Aktivitas dan
+                          frekuensi tertinggi. Nilai bisnis paling besar. Segmen paling berharga.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot no"></div>
+                      <div><span class="find-key">Cluster 1 — Dormant</span><span class="find-val">Aktivitas rendah,
+                          jarang terbang, sudah lama tidak aktif. Potensi churn tinggi.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot bl"></div>
+                      <div><span class="find-key">Cluster 2 — Price-Sensitive</span><span class="find-val">Cukup aktif
+                          namun sangat bergantung pada promo dan diskon.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">Cluster 3 — New / Growing</span><span class="find-val">Pelanggan baru
+                          dengan aktivitas yang mulai berkembang, potensial jadi loyal.</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>💡 Strategy per Segment</h4>
+                  <ul>
+                    <li><strong style="color:var(--text)">Core Loyal:</strong> Loyalty program eksklusif & prioritas
+                      peningkatan pengalaman layanan.</li>
+                    <li><strong style="color:var(--text)">Dormant:</strong> Re-engagement campaign biaya rendah — email,
+                      promo terbatas waktu.</li>
+                    <li><strong style="color:var(--text)">Price-Sensitive:</strong> Dynamic pricing & bundling untuk
+                      menjaga frekuensi tanpa mengorbankan margin.</li>
+                    <li><strong style="color:var(--text)">New Users:</strong> Perkuat onboarding & berikan insentif awal
+                      untuk mendorong repeat order.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HOUSE PRICE -->
+        <div class="project-card">
+          <div class="project-header">
+            <img src="assets/regression.jpg" class="project-thumb" alt="House Price Regression">
+            <div class="project-info">
+              <div class="project-title">🏠 House Price Prediction – Regularized Regression</div>
+              <p class="project-desc">ML project untuk memprediksi harga rumah menggunakan Boston Housing Dataset dengan
+                Ridge dan Lasso Regression. Ridge untuk akurasi prediksi yang stabil, Lasso untuk interpretabilitas
+                model melalui automatic feature selection.</p>
+              <span class="tools-badge">Tools: Python · Pandas · NumPy · Scikit-Learn · Plotly · Streamlit</span>
+              <div class="project-actions">
+                <button class="btn btn-outline btn-sm" onclick="toggleDetail('house')">🔍 View Details</button>
+                <button class="btn btn-gold-outline btn-sm"
+                  onclick="togglePPT('house-ppt','docs/regressionppt.pdf','House Price Prediction – Regularized Regression')">📑
+                  View PPT</button>
+              </div>
+            </div>
+          </div>
+          <div class="ppt-panel" id="house-ppt">
+            <div class="ppt-header">
+              <span class="ppt-title">📑 House Price Prediction – Regularized Regression.pdf</span>
+              <button class="ppt-close" onclick="togglePPT('house-ppt')">✕ Close</button>
+            </div>
+            <iframe class="ppt-viewer" id="house-ppt-frame" src="" loading="lazy"></iframe>
+          </div>
+          <div class="project-detail" id="detail-house">
+            <div class="detail-grid">
+              <div>
+                <div class="detail-section">
+                  <h4>📊 Model Evaluation</h4>
+                  <table class="model-table">
+                    <thead>
+                      <tr>
+                        <th>Model</th>
+                        <th>MAE</th>
+                        <th>RMSE</th>
+                        <th>MAPE</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Ridge Regression</td>
+                        <td class="best">3.04</td>
+                        <td class="best">4.67</td>
+                        <td class="best">15.29%</td>
+                      </tr>
+                      <tr>
+                        <td>Lasso Regression</td>
+                        <td>3.08</td>
+                        <td>4.67</td>
+                        <td>15.47%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="detail-section" style="margin-top:1.75rem">
+                  <h4>📊 Koefisien Ridge vs Lasso</h4>
+                  <div class="chart-wrap"><canvas id="houseChart"></canvas></div>
+                </div>
+              </div>
+              <div>
+                <div class="detail-section">
+                  <h4>📌 Project Overview</h4>
+                  <p>Memprediksi harga rumah menggunakan Boston Housing Dataset dengan pendekatan Regularized
+                    Regression. Ridge (L2) dan Lasso (L1) digunakan untuk mengatasi multicollinearity dan meningkatkan
+                    stabilitas serta interpretabilitas model.</p>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>📊 Method & Key Findings</h4>
+                  <p>Data preprocessing → EDA → Ridge & Lasso Regression → Evaluasi MAE, RMSE, MAPE. Evaluasi
+                    perbandingan koefisien untuk memahami pengaruh masing-masing fitur.</p>
+                  <div class="find-list" style="margin-top:.75rem">
+                    <div class="find-item">
+                      <div class="find-dot top"></div>
+                      <div><span class="find-key">Ridge sedikit lebih unggul</span><span class="find-val">MAE 3.04 vs
+                          Lasso 3.08 — lebih optimal untuk prediksi akurat.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot ok"></div>
+                      <div><span class="find-key">rm (jumlah kamar)</span><span class="find-val">Pengaruh positif paling
+                          konsisten di kedua model.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot no"></div>
+                      <div><span class="find-key">lstat (% penduduk berpenghasilan rendah)</span><span
+                          class="find-val">Pengaruh negatif signifikan — semakin tinggi lstat, harga turun.</span></div>
+                    </div>
+                    <div class="find-item">
+                      <div class="find-dot bl"></div>
+                      <div><span class="find-key">Lasso: feature selection otomatis</span><span class="find-val">nox
+                          dieliminasi (coef=0) — model lebih sederhana & interpretable.</span></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="detail-section" style="margin-top:1.25rem">
+                  <h4>💡 Insight & Recommendation</h4>
+                  <ul>
+                    <li>Gunakan Ridge untuk prediksi harga yang stabil dan akurat.</li>
+                    <li>Gunakan Lasso untuk memahami faktor-faktor penentu utama harga properti.</li>
+                    <li>Kombinasikan keduanya untuk mendapatkan insight yang lebih robust dan komprehensif.</li>
+                    <li>Fokus pada fitur utama: jumlah kamar (rm) dan kondisi sosial-ekonomi (lstat).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end tab-ds -->
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="section-label">Get in Touch</div>
+          <div class="tagline-big">Let's build something <span>data-driven</span> together.</div>
+          <p style="color:var(--muted2);font-size:1rem;max-width:420px;line-height:1.7">Open to data analyst and data
+            science roles, freelance projects, or just a conversation about data. Don't hesitate to reach out.</p>
+          <div class="contact-links">
+            <a href="https://linkedin.com/in/fayzan-rizky-hidayat/" target="_blank" class="contact-link">
+              <div class="cl-icon li">in</div>
+              <div>
+                <div class="cl-name">LinkedIn</div>
+                <div class="cl-sub">linkedin.com/in/fayzan-rizky-hidayat</div>
+              </div>
+            </a>
+            <a href="https://github.com/freedaya" target="_blank" class="contact-link">
+              <div class="cl-icon gh">gh</div>
+              <div>
+                <div class="cl-name">GitHub</div>
+                <div class="cl-sub">github.com/freedaya</div>
+              </div>
+            </a>
+            <a href="https://instagram.com/fayzan.rizky" target="_blank" class="contact-link">
+              <div class="cl-icon ig">ig</div>
+              <div>
+                <div class="cl-name">Instagram</div>
+                <div class="cl-sub">@fayzan.rizky</div>
+              </div>
+            </a>
+            <a href="mailto:fayzan.rh@gmail.com" class="contact-link">
+              <div class="cl-icon em">@</div>
+              <div>
+                <div class="cl-name">Email</div>
+                <div class="cl-sub">fayzan.rh@gmail.com</div>
+              </div>
+            </a>
+            <a href="tel:+6287776604718" class="contact-link">
+              <div class="cl-icon ph">📞</div>
+              <div>
+                <div class="cl-name">WhatsApp / Phone</div>
+                <div class="cl-sub">+62-877-7660-4718</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="avail-card">
+            <div class="skills-title" style="margin-top:0">Currently Available For</div>
+            <div class="find-list">
+              <div class="find-item">
+                <div class="find-dot ok"></div>
+                <div><span class="find-key">Full-time Data Analyst</span><span class="find-val"> atau Data Scientist
+                    roles</span></div>
+              </div>
+              <div class="find-item">
+                <div class="find-dot ok"></div>
+                <div><span class="find-key">Freelance data projects</span><span class="find-val"> — EDA, dashboard,
+                    predictive modeling</span></div>
+              </div>
+              <div class="find-item">
+                <div class="find-dot ok"></div>
+                <div><span class="find-key">Collaborative research</span><span class="find-val"> dan open-source
+                    contributions</span></div>
+              </div>
+            </div>
+            <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+              <div class="skills-title" style="margin-top:0">Based In</div>
+              <p style="font-size:.95rem;color:var(--muted2)">Indonesia — Open to remote & relocation</p>
+              <div class="skills-title">Languages</div>
+              <p style="font-size:.95rem;color:var(--muted2)">Bahasa Indonesia (Native) · English (Professional)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-tagline">Shall we<br>talk<span>?</span></div>
+        <div class="footer-contact-info">
+          <div class="fc-divider"></div>
+          <a href="mailto:fayzan.rh@gmail.com">fayzan.rh@gmail.com</a>
+          <a href="tel:+6287776604718">+62-877-7660-4718</a>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <strong>Fayzan Rizky Hidayat</strong>
+        Data Analyst & Data Scientist<br>
+        Indonesia<br><br>
+        Open to remote & relocation<br>
+        Bahasa Indonesia · English
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">Navigation</div>
+        <a href="#home" class="footer-col-link">Home</a>
+        <a href="#about" class="footer-col-link">About</a>
+        <a href="#projects" class="footer-col-link">Projects</a>
+        <a href="#contact" class="footer-col-link">Contact</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Data Analyst</div>
+        <a href="#projects" onclick="switchTabById('da')" class="footer-col-link">Surge Pricing Analysis</a>
+        <a href="#projects" onclick="switchTabById('da')" class="footer-col-link">A/B Testing</a>
+        <a href="#projects" onclick="switchTabById('da')" class="footer-col-link">Customer Satisfaction</a>
+        <a href="#projects" onclick="switchTabById('da')" class="footer-col-link">RFM Segmentation</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Data Science</div>
+        <a href="#projects" onclick="switchTabById('ds')" class="footer-col-link">Airbnb Superhost</a>
+        <a href="#projects" onclick="switchTabById('ds')" class="footer-col-link">Flight Clustering</a>
+        <a href="#projects" onclick="switchTabById('ds')" class="footer-col-link">House Price Prediction</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Connect</div>
+        <a href="https://linkedin.com/in/fayzan-rizky-hidayat/" target="_blank" class="footer-col-link">LinkedIn<div
+            class="footer-col-sub">fayzan-rizky-hidayat</div></a>
+        <a href="https://github.com/freedaya" target="_blank" class="footer-col-link">GitHub<div class="footer-col-sub">
+            github.com/freedaya</div></a>
+        <a href="https://instagram.com/fayzan.rizky" target="_blank" class="footer-col-link">Instagram<div
+            class="footer-col-sub">@fayzan.rizky</div></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <div class="footer-copy">All rights reserved 2026 &copy; Fayzan Rizky Hidayat</div>
+        <div class="footer-socials">
+          <span>Follow me —</span>
+          <a href="https://linkedin.com/in/fayzan-rizky-hidayat/" target="_blank">LinkedIn</a>
+          <a href="https://github.com/freedaya" target="_blank">GitHub</a>
+          <a href="https://instagram.com/fayzan.rizky" target="_blank">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // TAB SWITCHING
+    function switchTab(id) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab-' + id).classList.add('active');
+    }
+    function switchTabById(id) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      const btn = document.querySelector(`.tab-btn[onclick="switchTab('${id}')"]`);
+      if (btn) btn.classList.add('active');
+      const panel = document.getElementById('tab-' + id);
+      if (panel) panel.classList.add('active');
+      setTimeout(() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' }), 100);
+    }
+    function scrollToSurge() { setTimeout(() => document.getElementById('detail-surge')?.closest('.project-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300) }
+    function scrollToRFM() { setTimeout(() => document.getElementById('detail-rfm')?.closest('.project-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300) }
+    function scrollToAirbnb() { setTimeout(() => document.getElementById('detail-airbnb')?.closest('.project-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300) }
+
+    // TOGGLE DETAIL
+    const chartsDone = {};
+    function toggleDetail(id) {
+      const d = document.getElementById('detail-' + id);
+      const open = d.classList.toggle('open');
+      if (open && !chartsDone[id]) { chartsDone[id] = true; buildChart(id) }
+    }
+
+    // TOGGLE PPT VIEWER
+    function togglePPT(panelId, pdfSrc, title) {
+      const panel = document.getElementById(panelId);
+      const isOpen = panel.classList.contains('open');
+      // close all ppt panels first
+      document.querySelectorAll('.ppt-panel').forEach(p => p.classList.remove('open'));
+      if (!isOpen) {
+        panel.classList.add('open');
+        if (pdfSrc) {
+          const frame = document.getElementById(panelId + '-frame');
+          if (frame && !frame.src.includes(pdfSrc)) frame.src = pdfSrc;
+        }
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      }
+    }
+
+    // HEADER HIDE ON SCROLL
+    let lastY = 0;
+    const hdr = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      hdr.style.transform = y > lastY && y > 100 ? 'translateY(-100%)' : 'translateY(0)';
+      lastY = y;
+    }, { passive: true });
+
+    // MOBILE NAV
+    function closeMob() { document.getElementById('mobNav').classList.remove('open') }
+
+    // CHARTS
+    const G = '#e2b96f', GR = '#2dd4bf', R = '#f87171', B = '#4f9ef8', MU = '#7a8099';
+    Chart.defaults.color = MU;
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.08)';
+    Chart.defaults.font.family = "'Inter',sans-serif";
+    Chart.defaults.font.size = 12;
+
+    function buildChart(id) {
+      if (id === 'surge') {
+        // corr bars
+        const corrs = [
+          { l: 'Type_of_Cab', v: 0.50, c: G }, { l: 'Cancellation', v: 0.19, c: GR },
+          { l: 'Customer_Rating', v: -0.16, c: R }, { l: 'Trip_Distance', v: 0.14, c: GR },
+          { l: 'Confidence_LSI', v: 0.12, c: B }, { l: 'Destination_Type', v: 0.08, c: B },
+          { l: 'Gender', v: 0.01, c: MU }
+        ];
+        document.getElementById('corrSurge').innerHTML = corrs.map(d => `
+      <div class="corr-item">
+        <div class="corr-label">${d.l}</div>
+        <div class="corr-bw"><div class="corr-b" style="width:${Math.abs(d.v) / 0.55 * 100}%;background:${d.c}"></div></div>
+        <div class="corr-val">${d.v > 0 ? '+' : ''}${d.v.toFixed(2)}</div>
+      </div>`).join('');
+        new Chart(document.getElementById('surgeCabChart'), {
+          type: 'bar',
+          data: {
+            labels: ['A', 'B', 'C', 'D', 'E'], datasets: [
+              { label: 'Type 1', data: [69.2, 17.8, 3.7, 5, 9.2], backgroundColor: B, stack: 's' },
+              { label: 'Type 2', data: [10.5, 63.3, 61.5, 13.2, 18.7], backgroundColor: R, stack: 's' },
+              { label: 'Type 3', data: [20.4, 18.9, 34.8, 81.2, 72.1], backgroundColor: GR, stack: 's' }
+            ]
+          },
+          options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { x: { stacked: true }, y: { stacked: true, max: 100, ticks: { callback: v => v + '%' } } } }
+        });
+      }
+      if (id === 'rfm') {
+        new Chart(document.getElementById('rfmChart'), {
+          type: 'bar',
+          data: {
+            labels: ['Champions', 'Loyal', 'Potential', 'At Risk'], datasets: [{
+              data: [320, 480, 610, 290], backgroundColor: [G, GR, B, R], borderRadius: 6
+            }]
+          },
+          options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+      }
+      if (id === 'airbnb') {
+        new Chart(document.getElementById('airbnbChart'), {
+          type: 'bar',
+          data: {
+            labels: ['Response Rate', 'Reviews', 'Review Score', 'Amenities', 'Latitude'],
+            datasets: [
+              { label: 'LogReg', data: [0.54, 0.12, 0.10, 0.17, 0.03], backgroundColor: 'rgba(226,185,111,.8)' },
+              { label: 'SHAP RF', data: [1.0, 0.23, 0.44, 0.32, 0.06], backgroundColor: 'rgba(79,158,248,.8)' },
+              { label: 'Permutation RF', data: [1.0, 0.13, 0.63, 0.20, 0.04], backgroundColor: 'rgba(45,212,191,.8)' }
+            ]
+          },
+          options: { indexAxis: 'y', responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+      }
+      if (id === 'kmeans') {
+        new Chart(document.getElementById('clusterChart'), {
+          type: 'radar',
+          data: {
+            labels: ['Activity', 'Frequency', 'Distance', 'Recency', 'Engagement'],
+            datasets: [
+              { label: 'Core Loyal', data: [90, 85, 70, 80, 75], borderColor: G, backgroundColor: 'rgba(226,185,111,.1)', pointBackgroundColor: G },
+              { label: 'Dormant', data: [20, 15, 30, 10, 20], borderColor: R, backgroundColor: 'rgba(248,113,113,.1)', pointBackgroundColor: R },
+              { label: 'Price-Sensitive', data: [60, 55, 50, 65, 45], borderColor: B, backgroundColor: 'rgba(79,158,248,.1)', pointBackgroundColor: B },
+              { label: 'New/Growing', data: [40, 30, 45, 70, 50], borderColor: GR, backgroundColor: 'rgba(45,212,191,.1)', pointBackgroundColor: GR }
+            ]
+          },
+          options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { r: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { display: false }, pointLabels: { color: MU } } } }
+        });
+      }
+      if (id === 'house') {
+        new Chart(document.getElementById('houseChart'), {
+          type: 'bar',
+          data: {
+            labels: ['rm', 'chas', 'rad', 'b', 'zn', 'age', 'tax', 'indus', 'ptratio', 'dis', 'lstat', 'nox'],
+            datasets: [
+              { label: 'Ridge', data: [4.46, 2.54, 0.24, 0.01, 0.03, -0.01, -0.01, 0.007, -0.82, -1.33, -0.52, -9.53], backgroundColor: 'rgba(226,185,111,.75)', borderRadius: 4 },
+              { label: 'Lasso', data: [4.31, 0.91, 0.23, 0.01, 0.03, -0.01, -0.01, -0.01, -0.73, -1.28, -0.53, 0], backgroundColor: 'rgba(79,158,248,.75)', borderRadius: 4 }
+            ]
+          },
+          options: { responsive: true, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: false } } }
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>
