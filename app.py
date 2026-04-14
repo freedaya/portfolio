@@ -553,8 +553,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ─── Session state for PDF viewers ───────────────────
-for key in ["project1","project2","project3","project4","project5","project6","project7",
-            "pdf1","pdf2","pdf3","pdf4","pdf5","pdf6","pdf7"]:
+for key in ["project1","project2","project3","project4","project5","project5b","project6","project7",
+            "pdf1","pdf2","pdf3","pdf4","pdf5","pdf5b","pdf6","pdf7"]:
     if key not in st.session_state:
         st.session_state[key] = False
 
@@ -854,6 +854,118 @@ with tab1:
 #  TAB 2 – DATA SCIENCE
 # ══════════════════════════════════════════════════════
 with tab2:
+
+    # ── Project 5b: Sigma Cabs DS ─────────────────────
+    with st.container(border=True):
+        st.subheader("🚖 Surge Pricing Prediction – Sigma Cabs")
+        col1, col2 = st.columns([1, 2])
+        with col1:
+            st.image("assets/surgepredict.jpg")
+        with col2:
+            st.markdown("""
+            Machine Learning project to classify surge pricing type (1, 2, or 3) on the Sigma Cabs
+            taxi aggregator platform based on trip characteristics and customer behavior.
+            Built with a Random Forest Classifier pipeline with hyperparameter tuning via GridSearchCV
+            and SHAP-based feature importance analysis.
+            """)
+            st.write("**Tools:** Python (Pandas, Scikit-learn, SHAP, Plotly), Jupyter Notebook, Streamlit")
+            btn_row5b = st.columns([1, 1, 1])
+            with btn_row5b[0]:
+                if st.button("📄 View Slides", key="pdf_btn5b"):
+                    st.session_state.pdf5b = not st.session_state.pdf5b
+            with btn_row5b[1]:
+                st.link_button("🚀 Live Dashboard", "https://surge-pricing-analysis.streamlit.app/")
+            with btn_row5b[2]:
+                if st.button("🔍 View Details", key="btn5b"):
+                    st.session_state.project5b = not st.session_state.project5b
+
+        if st.session_state.pdf5b:
+            pdf_viewer("https://drive.google.com/file/d/1KWaTSj9JT8tuBiLLfhY5iLxEuCHufg8o/preview")
+
+        if st.session_state.project5b:
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader("📊 SHAP Feature Importance")
+                shap_data = pd.DataFrame({
+                    "Feature": [
+                        "Type_of_Cab", "Trip_Distance", "Cancellation_Last_1Month",
+                        "Customer_Rating", "Destination_Type", "Life_Style_Index",
+                        "Confidence_LSI", "Var3", "Var2", "Customer_Since_Months",
+                        "Gender_Female", "Gender_Male"
+                    ],
+                    "Type 1": [0.12, 0.14, 0.06, 0.10, 0.04, 0.03, 0.03, 0.02, 0.01, 0.01, 0.00, 0.00],
+                    "Type 2": [0.15, 0.04, 0.03, 0.04, 0.05, 0.03, 0.03, 0.02, 0.01, 0.01, 0.00, 0.00],
+                    "Type 3": [0.25, 0.16, 0.10, 0.10, 0.06, 0.05, 0.04, 0.03, 0.01, 0.01, 0.00, 0.00],
+                })
+                shap_data["Total"] = shap_data[["Type 1","Type 2","Type 3"]].sum(axis=1)
+                shap_sorted = shap_data.sort_values("Total", ascending=True)
+                shap_melt = shap_sorted.melt(
+                    id_vars="Feature", value_vars=["Type 1","Type 2","Type 3"],
+                    var_name="Surge_Type", value_name="SHAP_Value"
+                )
+                fig_shap = px.bar(
+                    shap_melt, x="SHAP_Value", y="Feature", color="Surge_Type",
+                    orientation="h", barmode="group",
+                    color_discrete_map={"Type 1":"#636EFA","Type 2":"#EF553B","Type 3":"#00CC96"},
+                    category_orders={"Feature": shap_sorted["Feature"].tolist()}
+                )
+                fig_shap.update_layout(
+                    height=420, margin=dict(t=10, b=0),
+                    paper_bgcolor="#13151f", plot_bgcolor="#13151f", font_color="#c0c8e0",
+                    legend=dict(title="Surge Type")
+                )
+                st.plotly_chart(fig_shap, use_container_width=True)
+
+                st.subheader("⚖️ Model Performance")
+                perf_df = pd.DataFrame({
+                    "Surge Type": ["Type 1", "Type 2", "Type 3", "Weighted Avg"],
+                    "Precision": ["74.31%", "65.95%", "78.16%", "72.11%"],
+                    "Recall":    ["60.10%", "83.99%", "61.37%", "70.83%"],
+                    "F1-Score":  ["66.45%", "73.88%", "68.76%", "70.48%"],
+                    "Support":   [6809, 14150, 11957, 32916],
+                })
+                st.dataframe(perf_df, use_container_width=True, hide_index=True)
+
+            with col2:
+                st.subheader("📌 Project Overview")
+                st.write("""
+                Sigma Cabs is a taxi aggregator platform in India connecting customers to various
+                service providers. Surge pricing is categorized into three types (1, 2, 3) based
+                on dynamic conditions. The company needed a reliable system to predict which
+                surge type an incoming order would fall into.
+
+                **Goal:** Build a classification model to predict surge pricing type from trip
+                characteristics and customer behavior, enabling faster and more efficient
+                service matching.
+                """)
+                st.subheader("📊 Method & Result")
+                st.write("""
+                Pipeline: ColumnTransformer (Yeo-Johnson on Var2/Var3) → StandardScaler →
+                Random Forest Classifier, tuned with GridSearchCV (F1-Weighted scoring).
+
+                **Best Model Parameters:**
+                - n_estimators: 200, max_depth: 12
+                - criterion: entropy, class_weight: balanced_subsample
+                - min_samples_split: 10, min_samples_leaf: 2
+
+                **Final Results (test set, n=32,916):**
+                - Accuracy: 70.87%  |  F1-Weighted: 70.48%
+                - Type 3 has the highest precision (78%), Type 2 has the highest recall (84%)
+                """)
+                st.subheader("💡 Insight & Recommendation")
+                st.write("""
+                **Key SHAP findings:**
+                - **Type_of_Cab** is the dominant predictor (SHAP ~0.52 total) — confirming the DA finding of r=0.50
+                - **Trip_Distance** strongly influences Type 1 and Type 3
+                - **Cancellation_Last_1Month** is the most behavioral signal for Type 3
+                - **Customer_Rating** shows a consistent negative effect on surge level
+
+                **Recommendations:**
+                - Deploy model for real-time surge classification on incoming orders
+                - Use cancellation patterns and destination insights for driver pre-positioning
+                - Implement loyalty rewards for high-rated customers to reduce Type 3 exposure
+                - Monitor and retrain periodically to prevent model drift
+                """)
 
     # ── Project 5: Airbnb Superhost ───────────────────
     with st.container(border=True):
