@@ -229,35 +229,147 @@ header { visibility: hidden; }
 }
 
 /* ═══════════════════════════════════════
-   ABOUT / INFO SECTION
+   ABOUT SECTIONS (Education, Skills, etc.)
 ═══════════════════════════════════════ */
-.info-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1px;
-    background: #1e2030;
+.about-section {
+    padding: 48px 48px 0;
     border-bottom: 1px solid #1e2030;
 }
-.info-card {
-    background: #13151f;
-    padding: 28px 32px;
-}
-.info-card-label {
+.about-section-title {
     font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     color: #4f8ef7;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
-.info-card-value {
-    font-size: 0.95rem;
+.about-section-heading {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 28px;
+}
+
+/* Education grid */
+.edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding-bottom: 40px;
+}
+.edu-card {
+    background: #13151f;
+    border: 1px solid #1e2030;
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.edu-card-inst {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+.edu-card-degree {
+    font-size: 0.88rem;
+    color: #4f8ef7;
+    font-weight: 500;
+}
+.edu-card-period {
+    font-size: 0.78rem;
+    color: #6b7fa3;
+}
+.edu-card-detail {
+    font-size: 0.82rem;
+    color: #8891a8;
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+/* Skills grid */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding-bottom: 40px;
+}
+.skill-card {
+    background: #13151f;
+    border: 1px solid #1e2030;
+    border-radius: 10px;
+    padding: 16px 20px;
+}
+.skill-name {
+    font-size: 0.9rem;
     font-weight: 600;
     color: #e0e0e0;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.skill-score {
+    font-size: 0.78rem;
+    color: #4f8ef7;
+    font-weight: 500;
+}
+.skill-bar-track {
+    display: flex;
+    gap: 4px;
+}
+.skill-pip {
+    flex: 1;
+    height: 8px;
+    border-radius: 3px;
+}
+.skill-pip.filled { background: #4f8ef7; }
+.skill-pip.empty  { background: #1e2030; }
+
+/* Certification grid */
+.cert-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 40px;
+}
+.cert-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    background: #13151f;
+    border: 1px solid #1e2030;
+    border-radius: 10px;
+    overflow: hidden;
+    align-items: center;
+}
+.cert-info {
+    padding: 24px 28px;
+}
+.cert-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
     margin-bottom: 4px;
 }
-.info-card-sub {
-    font-size: 0.8rem;
-    color: #6b7fa3;
+.cert-issuer {
+    font-size: 0.85rem;
+    color: #4f8ef7;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+.cert-detail {
+    font-size: 0.82rem;
+    color: #8891a8;
+    line-height: 1.5;
+}
+.cert-image {
+    padding: 16px 20px 16px 0;
+}
+.cert-image img {
+    width: 100%;
+    border-radius: 6px;
+    object-fit: contain;
+    height: 400px;
 }
 
 /* ═══════════════════════════════════════
@@ -433,9 +545,7 @@ div[data-testid="stLinkButton"] > a:hover {
     background: #203060 !important;
 }
 
-[data-testid="stDataFrame"] {
-    background: #13151f;
-}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -446,6 +556,24 @@ def pdf_viewer(url):
     st.markdown(f"""
     <iframe src="{url}" width="100%" height="600"></iframe>
     """, unsafe_allow_html=True)
+
+# ======================
+# HELPER – Dark styled dataframe
+# ======================
+_dark_table_styles = [
+    {"selector": "thead th", "props": [
+        ("background-color", "#1a1f35"), ("color", "#a0a8be"),
+        ("font-weight", "600"), ("border-bottom", "1px solid #2a3150"),
+    ]},
+    {"selector": "tbody tr", "props": [("background-color", "#13151f")]},
+    {"selector": "tbody tr:nth-child(even)", "props": [("background-color", "#16192a")]},
+    {"selector": "tbody td", "props": [("color", "#e0e0e0"), ("border-color", "#1e2030")]},
+]
+
+def dark_df(styler):
+    return (styler
+            .set_properties(**{"background-color": "#13151f", "color": "#e0e0e0", "border-color": "#1e2030"})
+            .set_table_styles(_dark_table_styles))
 
 # ======================
 # HELPER – Load image as base64
@@ -510,34 +638,101 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ======================
-# INFO STRIP (Education + Skills)
+# SECTION 1 – EDUCATION
 # ======================
 st.markdown("""
-<div class="info-section" id="about-detail">
-    <div class="info-card">
-        <div class="info-card-label">Education</div>
-        <div class="info-card-value">Universitas Padjadjaran</div>
-        <div class="info-card-sub">Bachelor of Physics Sciences · 2021 – 2025</div>
+<div class="about-section" id="about-detail">
+    <div class="about-section-title">Background</div>
+    <div class="about-section-heading">Education</div>
+    <div class="edu-grid">
+        <div class="edu-card">
+            <div class="edu-card-inst">Universitas Padjadjaran</div>
+            <div class="edu-card-degree">Bachelor of Physics</div>
+            <div class="edu-card-period">August 2021 – August 2025</div>
+            <div class="edu-card-detail">Computational Physics, Instrumentation, Renewable Energy. Final Project: Hydrogen atom polarizability under Stark Effect using Python (80.6% accuracy).</div>
+        </div>
+        <div class="edu-card">
+            <div class="edu-card-inst">Dibimbing.id</div>
+            <div class="edu-card-degree">Data Analyst & Data Science Bootcamp</div>
+            <div class="edu-card-period">September 2025 – April 2026</div>
+            <div class="edu-card-detail">Python (Pandas, NumPy, Matplotlib, Seaborn), SQL, EDA, interactive dashboards, regression and classification with supervised & unsupervised learning.</div>
+        </div>
     </div>
-    <div class="info-card">
-        <div class="info-card-label">Bootcamp</div>
-        <div class="info-card-value">dibimbing.id</div>
-        <div class="info-card-sub">Data Analyst / Data Science · 2025 – 2026</div>
+</div>
+""", unsafe_allow_html=True)
+
+# ======================
+# SECTION 2 – SKILLS
+# ======================
+
+def skill_pips(filled, total=5):
+    pips = ""
+    for i in range(total):
+        cls = "filled" if i < filled else "empty"
+        pips += f'<div class="skill-pip {cls}"></div>'
+    return pips
+
+skills = [
+    ("Python",              5, "5/5"),
+    ("SQL",                 4, "4/5"),
+    ("Power BI",            5, "5/5"),
+    ("Tableau",             4, "4/5"),
+    ("Excel",               5, "5/5"),
+    ("Google Looker",       4, "4/5"),
+    ("Machine Learning",    4, "4/5"),
+    ("Data Visualization",  5, "5/5"),
+    ("EDA",                 5, "5/5"),
+]
+
+skill_cards = "".join([
+    f"""<div class="skill-card">
+        <div class="skill-name">{name}<span class="skill-score">{score}</span></div>
+        <div class="skill-bar-track">{skill_pips(filled)}</div>
+    </div>"""
+    for name, filled, score in skills
+])
+
+st.markdown(f"""
+<div class="about-section">
+    <div class="about-section-title">Expertise</div>
+    <div class="about-section-heading">Skills</div>
+    <div class="skills-grid">
+        {skill_cards}
     </div>
-    <div class="info-card">
-        <div class="info-card-label">Programming</div>
-        <div class="info-card-value">Python · PostgreSQL</div>
-        <div class="info-card-sub">Pandas, NumPy, Scikit-learn</div>
-    </div>
-    <div class="info-card">
-        <div class="info-card-label">Visualization</div>
-        <div class="info-card-value">Power BI · Tableau · Streamlit</div>
-        <div class="info-card-sub">DAX, Interactive Dashboards</div>
-    </div>
-    <div class="info-card">
-        <div class="info-card-label">Soft Skills</div>
-        <div class="info-card-value">Communication · Problem Solving</div>
-        <div class="info-card-value ">Teamwork · Digital Literacy</div>
+</div>
+""", unsafe_allow_html=True)
+
+# ======================
+# SECTION 3 – CERTIFICATION
+# ======================
+dibimbing_b64 = img_b64("assets/sertidibimbing.jpg")
+english_b64   = img_b64("assets/sertienglish.jpg")
+
+st.markdown(f"""
+<div class="about-section">
+    <div class="about-section-title">Credentials</div>
+    <div class="about-section-heading">Certifications</div>
+    <div class="cert-grid">
+        <div class="cert-row">
+            <div class="cert-info">
+                <div class="cert-title">Data Analyst & Data Science</div>
+                <div class="cert-issuer">Dibimbing.id · 2025 – 2026</div>
+                <div class="cert-detail">Grade A · Completed bootcamp covering Python, SQL, EDA, Machine Learning, and dashboard development.</div>
+            </div>
+            <div class="cert-image">
+                <img src="data:image/png;base64,{dibimbing_b64}" alt="Dibimbing Certificate">
+            </div>
+        </div>
+        <div class="cert-row">
+            <div class="cert-info">
+                <div class="cert-title">EF SET English Certificate</div>
+                <div class="cert-issuer">EF Standard English Test · September 2025</div>
+                <div class="cert-detail">C1 Advanced.</div>
+            </div>
+            <div class="cert-image">
+                <img src="data:image/png;base64,{english_b64}" alt="EF English Certificate">
+            </div>
+        </div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -569,7 +764,7 @@ with tab1:
     # ── Project 1: Surge Pricing ──────────────────────
     with st.container(border=True):
         st.subheader("🚕 Surge Pricing Analysis – Sigma Cabs")
-        col1, col2 = st.columns([1, 2])
+        col1, col2 = st.columns(2)
         with col1:
             st.image("assets/surgepricing.jpg")
         with col2:
@@ -594,7 +789,7 @@ with tab1:
         if st.session_state.project1:
             col1, col2 = st.columns(2)
             with col1:
-                st.subheader("📊 Feature Correlation vs Surge Pricing")
+                st.subheader("Feature Correlation vs Surge Pricing")
                 corr_data = pd.DataFrame({
                     "Factor": ["Type_of_Cab","Cancellation_Last_1Month","Customer_Rating",
                                "Trip_Distance","Confidence_LSI","Destination_Type","Gender"],
@@ -610,10 +805,10 @@ with tab1:
                 fig_corr.update_traces(textposition="outside")
                 fig_corr.update_layout(height=320, margin=dict(t=10,b=0),
                                        paper_bgcolor="#13151f", plot_bgcolor="#13151f",
-                                       font_color="#c0c8e0")
+                                       font_color="#ffffff")
                 st.plotly_chart(fig_corr, use_container_width=True)
 
-                st.subheader("📊 Cab Type vs Surge Level (%)")
+                st.subheader("Cab Type vs Surge Level (%)")
                 cab_data = pd.DataFrame({
                     "Cab Type": ["A","B","C","D","E"]*3,
                     "Surge Type": ["Type 1"]*5+["Type 2"]*5+["Type 3"]*5,
@@ -626,7 +821,7 @@ with tab1:
                 fig_cab.update_traces(texttemplate="%{text:.1f}%", textposition="inside")
                 fig_cab.update_layout(height=320, margin=dict(t=10,b=0),
                                       paper_bgcolor="#13151f", plot_bgcolor="#13151f",
-                                      font_color="#c0c8e0")
+                                      font_color="#ffffff",legend_font_color="#ffffff")
                 st.plotly_chart(fig_cab, use_container_width=True)
 
             with col2:
@@ -669,7 +864,7 @@ with tab1:
     # ── Project 2: A/B Testing ───────────────────────
     with st.container(border=True):
         st.subheader("📈 A/B Testing – Landing Page Conversion Rate")
-        col1, col2 = st.columns([1, 2])
+        col1, col2 = st.columns(2)
         with col1:
             st.image("assets/abtesting.jpg")
         with col2:
@@ -695,7 +890,7 @@ with tab1:
         if st.session_state.project2:
             col1, col2 = st.columns(2)
             with col1:
-                st.subheader("📊 Power BI Dashboard")
+                st.subheader("Power BI Dashboard")
                 st.image("assets/abtestingdb.jpg")
             with col2:
                 st.subheader("📌 Project Overview")
@@ -731,7 +926,7 @@ with tab1:
     # ── Project 3: Customer Satisfaction ─────────────
     with st.container(border=True):
         st.subheader("📊 Customer Satisfaction & Sentiment Analysis")
-        col1, col2 = st.columns([1, 2])
+        col1, col2 = st.columns(2)
         with col1:
             st.image("assets/customersatisfaction.jpg")
         with col2:
@@ -754,7 +949,7 @@ with tab1:
         if st.session_state.project3:
             col1, col2 = st.columns(2)
             with col1:
-                st.subheader("📊 Key Visualization")
+                st.subheader("Key Visualization")
                 st.image("assets/customersatisfactiondb.jpg")
             with col2:
                 st.subheader("📌 Project Overview")
@@ -789,7 +984,7 @@ with tab1:
     # ── Project 4: Customer Segmentation ─────────────
     with st.container(border=True):
         st.subheader("🧩 Customer Segmentation – RFM Analysis")
-        col1, col2 = st.columns([1, 2])
+        col1, col2 = st.columns(2)
         with col1:
             st.image("assets/customeranalysis.jpg")
         with col2:
@@ -815,7 +1010,7 @@ with tab1:
         if st.session_state.project4:
             col1, col2 = st.columns(2)
             with col1:
-                st.subheader("📊 Dashboard")
+                st.subheader("Dashboard")
                 st.image("assets/customeranalysisdb.jpg")
             with col2:
                 st.subheader("📌 Project Overview")
@@ -858,7 +1053,7 @@ with tab2:
     # ── Project 5b: Sigma Cabs DS ─────────────────────
     with st.container(border=True):
         st.subheader("🚖 Surge Pricing Prediction – Sigma Cabs")
-        col1, col2 = st.columns([1, 2])
+        col1, col2 = st.columns(2)
         with col1:
             st.image("assets/surgepredict.jpg")
         with col2:
@@ -885,7 +1080,7 @@ with tab2:
         if st.session_state.project5b:
             col1, col2 = st.columns(2)
             with col1:
-                st.subheader("📊 SHAP Feature Importance")
+                st.subheader("SHAP Feature Importance")
                 shap_data = pd.DataFrame({
                     "Feature": [
                         "Type_of_Cab", "Trip_Distance", "Cancellation_Last_1Month",
@@ -898,7 +1093,7 @@ with tab2:
                     "Type 3": [0.25, 0.16, 0.10, 0.10, 0.06, 0.05, 0.04, 0.03, 0.01, 0.01, 0.00, 0.00],
                 })
                 shap_data["Total"] = shap_data[["Type 1","Type 2","Type 3"]].sum(axis=1)
-                shap_sorted = shap_data.sort_values("Total", ascending=True)
+                shap_sorted = shap_data.sort_values("Total", ascending=False)
                 shap_melt = shap_sorted.melt(
                     id_vars="Feature", value_vars=["Type 1","Type 2","Type 3"],
                     var_name="Surge_Type", value_name="SHAP_Value"
@@ -911,12 +1106,12 @@ with tab2:
                 )
                 fig_shap.update_layout(
                     height=420, margin=dict(t=10, b=0),
-                    paper_bgcolor="#13151f", plot_bgcolor="#13151f", font_color="#c0c8e0",
-                    legend=dict(title="Surge Type")
+                    paper_bgcolor="#13151f", plot_bgcolor="#13151f", font_color="#ffffff",
+                    legend_font_color="#ffffff"
                 )
                 st.plotly_chart(fig_shap, use_container_width=True)
 
-                st.subheader("⚖️ Model Performance")
+                st.subheader("Model Performance")
                 perf_df = pd.DataFrame({
                     "Surge Type": ["Type 1", "Type 2", "Type 3", "Weighted Avg"],
                     "Precision": ["74.31%", "65.95%", "78.16%", "72.11%"],
@@ -924,7 +1119,7 @@ with tab2:
                     "F1-Score":  ["66.45%", "73.88%", "68.76%", "70.48%"],
                     "Support":   [6809, 14150, 11957, 32916],
                 })
-                st.dataframe(perf_df, use_container_width=True, hide_index=True)
+                st.dataframe(dark_df(perf_df.style), use_container_width=True, hide_index=True)
 
             with col2:
                 st.subheader("📌 Project Overview")
@@ -970,7 +1165,7 @@ with tab2:
     # ── Project 5: Airbnb Superhost ───────────────────
     with st.container(border=True):
         st.subheader("🏨 Airbnb Superhost Classification Analysis")
-        col1, col2 = st.columns([1, 2])
+        col1, col2 = st.columns(2)
         with col1:
             st.image("assets/superhostclassification.jpg")
         with col2:
@@ -1011,12 +1206,12 @@ with tab2:
                           category_orders={"Feature": feature_order})
         fig_comp.update_layout(yaxis=dict(autorange="reversed"), yaxis_title="", height=600,
                                margin=dict(t=30,b=0),
-                               paper_bgcolor="#13151f", plot_bgcolor="#13151f", font_color="#c0c8e0")
+                               paper_bgcolor="#13151f", plot_bgcolor="#13151f", font_color="#ffffff",legend_font_color="#ffffff")
 
         if st.session_state.project5:
             col1, col2 = st.columns(2)
             with col1:
-                st.markdown("#### ⚖️ Model Performance Comparison")
+                st.markdown("#### Model Performance Comparison")
                 model_results = pd.DataFrame({
                     "Model": ["Dummy Baseline","Logistic Regression","Random Forest",
                               "Logistic Regression (Tuned)","Random Forest (Tuned)"],
@@ -1026,9 +1221,9 @@ with tab2:
                     "F1 Score":  [0.00, 0.60, 0.70, 0.60, 0.71],
                     "ROC-AUC":   [0.50, 0.892, 0.942, 0.892, 0.949],
                 })
-                st.dataframe(model_results.style
+                st.dataframe(dark_df(model_results.style
                              .format("{:.3f}", subset=["Accuracy","Precision","Recall","F1 Score","ROC-AUC"])
-                             .highlight_max(subset=["F1 Score","ROC-AUC"], color="#1a2f1a"),
+                             .highlight_max(subset=["F1 Score","ROC-AUC"], color="#1a3a5c")),
                              use_container_width=True, hide_index=True)
                 st.subheader("📊 Feature Importance Comparison (Normalized)")
                 st.plotly_chart(fig_comp, use_container_width=True)
@@ -1067,7 +1262,7 @@ with tab2:
     # ── Project 6: Flight Clustering ─────────────────
     with st.container(border=True):
         st.subheader("✈️ Flight Customer Segmentation – K-Means Clustering")
-        col1, col2 = st.columns([1, 2])
+        col1, col2 = st.columns(2)
         with col1:
             st.image("assets/clustering.jpg")
         with col2:
@@ -1099,12 +1294,12 @@ with tab2:
     df_plot = pd.DataFrame({"PC1": X_pca[:,0], "PC2": X_pca[:,1], "Cluster": clusters.astype(str)})
     fig_pca = px.scatter(df_plot, x="PC1", y="PC2", color="Cluster")
     fig_pca.update_layout(height=500, paper_bgcolor="#13151f", plot_bgcolor="#13151f",
-                          font_color="#c0c8e0")
+                          font_color="#ffffff",legend_font_color="#ffffff")
 
     if st.session_state.project6:
         col1, col2 = st.columns(2)
         with col1:
-            st.subheader("📊 Clustering Insight (PCA Projection)")
+            st.subheader("Clustering Insight (PCA Projection)")
             st.plotly_chart(fig_pca, use_container_width=True)
         with col2:
             st.subheader("📌 Project Overview")
@@ -1140,7 +1335,7 @@ with tab2:
     # ── Project 7: House Price Regression ────────────
     with st.container(border=True):
         st.subheader("🏠 House Price Prediction – Regularized Regression")
-        col1, col2 = st.columns([1, 2])
+        col1, col2 = st.columns(2)
         with col1:
             st.image("assets/regression.jpg")
         with col2:
@@ -1166,16 +1361,16 @@ with tab2:
     df_coef    = pd.read_csv("data/coef.csv")
     df_coef_melt = df_coef.melt(id_vars="Feature", var_name="Model", value_name="Coefficient")
     fig_coef = px.bar(df_coef_melt, x="Feature", y="Coefficient", color="Model",
-                      barmode="group", title="Feature Importance (Ridge vs Lasso)")
+                      barmode="group")
     fig_coef.update_layout(height=450, paper_bgcolor="#13151f", plot_bgcolor="#13151f",
-                           font_color="#c0c8e0")
+                           font_color="#ffffff",legend_font_color="#ffffff")
 
     if st.session_state.project7:
         col1, col2 = st.columns(2)
         with col1:
-            st.subheader("📊 Model Evaluation")
-            st.dataframe(df_metrics, use_container_width=True, hide_index=True)
-            st.subheader("📊 Feature Importance")
+            st.subheader("Model Evaluation")
+            st.dataframe(dark_df(df_metrics.style), use_container_width=True, hide_index=True)
+            st.subheader("Feature Importance")
             st.plotly_chart(fig_coef, use_container_width=True)
         with col2:
             st.subheader("📌 Project Overview")
