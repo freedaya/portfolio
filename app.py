@@ -680,7 +680,7 @@ skills = [
     ("Excel",               5, "5/5"),
     ("Google Looker",       4, "4/5"),
     ("Machine Learning",    4, "4/5"),
-    ("Data Visualization",  5, "5/5"),
+    ("Data Cleaning",       5, "5/5"),
     ("EDA",                 5, "5/5"),
 ]
 
