@@ -665,34 +665,32 @@ st.markdown("""
 # SECTION 2 – SKILLS
 # ======================
 
-def skill_pips(filled, total=5):
-    pips = ""
-    for i in range(total):
-        cls = "filled" if i < filled else "empty"
-        pips += f'<div class="skill-pip {cls}"></div>'
-    return pips
-
 skills = [
-    ("Python",              5, "5/5"),
-    ("SQL",                 4, "4/5"),
-    ("Power BI",            5, "5/5"),
-    ("Tableau",             4, "4/5"),
-    ("Excel",               5, "5/5"),
-    ("Google Looker",       4, "4/5"),
-    ("Machine Learning",    4, "4/5"),
-    ("Data Cleaning",       5, "5/5"),
-    ("EDA",                 5, "5/5"),
+    ("Python",              '<i class="fa-brands fa-python" style="font-size: 1.4rem; color: #3776AB;"></i>'),
+    ("SQL (PostgreSQL)",    '<i class="fa-solid fa-database" style="font-size: 1.3rem; color: #336791;"></i>'),
+    ("Power BI",            '<i class="fa-solid fa-chart-bar" style="font-size: 1.3rem; color: #F2C811;"></i>'),
+    ("Tableau",             '<i class="fa-solid fa-chart-pie" style="font-size: 1.3rem; color: #E97627;"></i>'),
+    ("Excel",               '<i class="fa-regular fa-file-excel" style="font-size: 1.4rem; color: #10798F;"></i>'),
+    ("Google Looker",       '<i class="fa-solid fa-chart-line" style="font-size: 1.3rem; color: #4285F4;"></i>'),
+    ("Machine Learning",    '<i class="fa-solid fa-brain" style="font-size: 1.3rem; color: #A855F7;"></i>'),
+    ("Data Cleaning",       '<i class="fa-solid fa-broom" style="font-size: 1.3rem; color: #EAB308;"></i>'),
+    ("EDA",                 '<i class="fa-solid fa-magnifying-glass-chart" style="font-size: 1.3rem; color: #06b6d4;"></i>'),
 ]
 
+font_awesome_cdn = '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">'
+
 skill_cards = "".join([
-    f"""<div class="skill-card">
-        <div class="skill-name">{name}<span class="skill-score">{score}</span></div>
-        <div class="skill-bar-track">{skill_pips(filled)}</div>
+    f"""<div class="skill-card" style="display: flex; align-items: center; gap: 14px; padding: 12px 16px;">
+        <div class="skill-icon" style="display: flex; align-items: center; justify-content: center; width: 28px;">
+            {icon_html}
+        </div>
+        <div class="skill-name" style="margin: 0; font-weight: 500;">{name}</div>
     </div>"""
-    for name, filled, score in skills
+    for name, icon_html in skills
 ])
 
 st.markdown(f"""
+{font_awesome_cdn}
 <div class="about-section">
     <div class="about-section-title">Expertise</div>
     <div class="about-section-heading">Skills</div>
